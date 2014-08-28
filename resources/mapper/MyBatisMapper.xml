@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.orm.dao.OrmDao">
+	<select id="getAreaDtos" resultType="AreaDto">
+		select * from t_area
+	</select>
+	<select id="getAreaDto" parameterType="int" resultType="AreaDto">
+		select *
+		from t_area where areaid = #{id}
+	</select>
+	<select id="getBuildingDto" parameterType="int" resultMap="buildingMap">
+		select * from t_building where buildid = #{id}
+	</select>
+	<resultMap type="BuildingDto" id="buildingMap">
+		<constructor>
+			<idArg column="buildid" javaType="int"/>
+			<arg column="buildname" javaType="String"/>
+		</constructor>
+	</resultMap>
+	<!-- 使用HashMap传递多个参数 parameterType 可以是别名或完全限定名 ,map->java.util.Map,这两个都是可以的 -->
+	<select id="getStoreDtosByMap" parameterType="map" resultType="StoreDto">
+		select * from t_store where build_id = #{build_id} and
+		floor_id=#{floor_id} and area_id=#{area_id}
+	</select>
+	<!-- 使用JavaBean传递多个参数 -->
+	<select id="getStoreDtosByBean" parameterType="StoreDto" resultType="StoreDto">
+		select * from t_store where build_id = #{build_Id} and
+		floor_id=#{floor_Id} and area_id=#{area_Id}
+	</select>
+	<select id="getCountStore" resultType="int">
+		select count(id) from t_store 
+	</select>
+	<insert id="saveBuildByBean" parameterType="BuildingDto">
+		insert into t_building(BUILDNAME,DETAIL,SORTNO,INSERT_TIME,UPDATE_TIME,OPERATE_ID)
+		values(#{buildname},#{detail},#{sortno},#{insertTime},#{updateTime},#{operateId})
+	</insert>
+	<insert id="saveBuildByMap" parameterType="map">
+		insert into t_building(BUILDNAME,DETAIL,SORTNO,INSERT_TIME,UPDATE_TIME,OPERATE_ID)
+		values(#{buildname},#{detail},#{sortno},#{inserttime},#{updatetime},#{operateId})
+	</insert>
+	<delete id="deleteBuildById" parameterType="int">
+		delete from t_building where buildid=#{id}
+	</delete>
+	<update id="updateBuildById" parameterType="BuildingDto">
+		update t_building set buildname=#{buildname},detail=#{detail},UPDATE_TIME=#{updateTime}
+		where buildid=#{buildid}
+	</update>
+	<!-- 关联查询 -->
+	<select id="getdetailstore" resultMap="getStoreDto">
+		select a.*
+		from t_store a,t_building b,t_floor c,t_area d
+		where 
+		a.build_Id=b.buildid and
+		a.floor_Id=c.floorid and 
+		a.area_Id=d.areaid 
+	</select>
+	<resultMap type="StoreDto" id="getStoreDto">
+		<association property="buildingDto" column="build_Id" resultMap="getBuildingDto"></association>
+	</resultMap>
+	<resultMap type="BuildingDto" id="getBuildingDto">
+	</resultMap>
+</mapper>
