@@ -16,6 +16,7 @@
 	default-autowire="byName" default-lazy-init="true">
 	<!-- 启动对@AspectJ注解的支持 -->
     <aop:aspectj-autoproxy/>
+    <context:annotation-config/>  
 	<!-- 注解扫描包 -->
 	<context:component-scan base-package="com.orm"/>
 	<!-- 属性文件读入 -->

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/pubTools.js"></script>
+</head>
+<body>
+<input type="button" value="保存" onclick="add()">
+<script type="text/javascript">
+	function add(){
+		exeAjaxJSONSync("test", {type:"add"}, addcallback, errorcallback);
+	}
+	function addcallback(res){
+		
+	}
+	function errorcallback(res){}
+</script>
+</body>
+</html>
