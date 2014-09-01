@@ -7,10 +7,14 @@
 <script type="text/javascript" src="js/pubTools.js"></script>
 </head>
 <body>
-<input type="button" value="保存" onclick="add()">
+<input type="button" value="保存(Servlet)" onclick="add()">
+<input type="button" value="保存(SpringMVC)" onclick="add1()">
 <script type="text/javascript">
 	function add(){
 		exeAjaxJSONSync("test", {type:"add"}, addcallback, errorcallback);
+	}
+	function add1(){
+		exeAjaxJSONSync("add.do", {type:"add"}, addcallback, errorcallback);
 	}
 	function addcallback(res){
 		
