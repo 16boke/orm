@@ -16,7 +16,6 @@ import com.orm.dto.AreaDto;
 import com.orm.dto.BuildingDto;
 import com.orm.dto.StoreDto;
 import com.orm.utils.DateUtil;
-import com.orm.utils.MyBatisUtils;
 
 public class AreaMyBatisTest {
 	private SqlSessionFactory sqlSessionFactory = null;
